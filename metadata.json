@@ -9,8 +9,9 @@
 			"packageManager": ["none"]
 		},
 		"defaults": {
-			"packageManager": "none",
-			"frontend": "tanstackstart-app",
+			"installCommand": "pnpm install",
+			"packageManager": "pnpm",
+			"frontend": "none",
 			"solidityFramework": "none"
 		},
 		"outro": {
