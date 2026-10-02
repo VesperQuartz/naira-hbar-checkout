@@ -1,0 +1,29 @@
+{
+	"name": "@repo/auth",
+	"type": "module",
+	"types": "./dist/index.d.mts",
+	"exports": {
+		".": "./dist/index.mjs",
+		"./lib": "./dist/lib/index.mjs",
+		"./lib/auth": "./dist/lib/auth.mjs",
+		"./lib/permission": "./dist/lib/permission.mjs",
+		"./package.json": "./package.json"
+	},
+	"scripts": {
+		"build": "tsdown",
+		"watch": "tsdown --watch",
+		"lint": "biome check",
+		"auth:generate": "pnpm dlx auth@latest generate --output ../storage/src/schema/auth.schema.ts --config ./src/lib/auth.ts"
+	},
+	"devDependencies": {
+		"@repo/typescript-config": "workspace:*",
+		"@types/bun": "latest"
+	},
+	"dependencies": {
+		"@better-auth/drizzle-adapter": "^1.7.7",
+		"@repo/shared": "workspace:*",
+		"@repo/storage": "workspace:*",
+		"better-auth": "^1.7.7",
+		"better-result": "^3.0.1"
+	}
+}

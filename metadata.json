@@ -1,0 +1,24 @@
+{
+	"name": "usd-checkout",
+	"description": "Pay in USD, settle in HBAR using a price oracle",
+	"version": "1.0.0",
+	"create-scaffold-hbar": {
+		"capabilities": {
+			"frontend": ["tanstackstart-app"],
+			"solidityFramework": ["foundry"],
+			"packageManager": ["none"]
+		},
+		"defaults": {
+			"packageManager": "none",
+			"frontend": "nextjs-app",
+			"solidityFramework": "foundry"
+		},
+		"outro": {
+			"installCommand": "pnpm install",
+			"steps": [
+				"+Template setup note",
+				"Use this template with pnpm at the project root."
+			]
+		}
+	}
+}

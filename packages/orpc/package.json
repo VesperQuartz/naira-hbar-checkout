@@ -1,0 +1,49 @@
+{
+	"name": "@repo/orpc",
+	"type": "module",
+	"types": "./dist/index.d.mts",
+	"devDependencies": {
+		"@repo/typescript-config": "workspace:*",
+		"@types/bun": "latest",
+		"@types/node": "^26.6.4",
+		"typescript": "7.0.2"
+	},
+	"scripts": {
+		"lint": "biome check",
+		"build": "tsdown",
+		"watch": "tsdown --watch"
+	},
+	"imports": {
+		"#/*": "./src/*"
+	},
+	"exports": {
+		".": "./dist/index.mjs",
+		"./client": "./dist/client/index.mjs",
+		"./openapi": "./dist/openapi/index.mjs",
+		"./routers": "./dist/routers/index.mjs",
+		"./routers/base": "./dist/routers/base/index.mjs",
+		"./routers/middleware": "./dist/routers/middleware/index.mjs",
+		"./routers/middleware/superjson/handler": "./dist/routers/middleware/superjson/handler.mjs",
+		"./routers/middleware/superjson/link": "./dist/routers/middleware/superjson/link.mjs",
+		"./routers/middleware/superjson/serializer": "./dist/routers/middleware/superjson/serializer.mjs",
+		"./routers/todo": "./dist/routers/todo/index.mjs",
+		"./server": "./dist/server/index.mjs",
+		"./package.json": "./package.json"
+	},
+	"dependencies": {
+		"@orpc/client": "^1.15.4",
+		"@orpc/openapi": "^1.15.4",
+		"@orpc/openapi-client": "^1.15.4",
+		"@orpc/server": "^1.15.4",
+		"@orpc/shared": "^1.15.4",
+		"@orpc/zod": "^1.15.4",
+		"@repo/auth": "workspace:*",
+		"@repo/shared": "workspace:*",
+		"better-result": "^3.0.1",
+		"expo": "^57.0.26",
+		"expo-constants": "~57.0.20",
+		"superjson": "^2.2.6",
+		"ts-pattern": "^5.9.0",
+		"zod": "^4.6.5"
+	}
+}

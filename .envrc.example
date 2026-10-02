@@ -1,0 +1,4 @@
+export DATABASE_URL=
+export BETTER_AUTH_SECRET=
+export BETTER_AUTH_URL=
+export VITE_PUBLIC_API_URL=

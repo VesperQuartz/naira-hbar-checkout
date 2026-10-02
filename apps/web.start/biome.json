@@ -1,0 +1,15 @@
+{
+	"extends": "//",
+	"files": {
+		"ignoreUnknown": true,
+		"includes": [
+			"**",
+			"!node_modules",
+			"!.next",
+			"!dist",
+			"!build",
+			"!*.gen.ts",
+			"!src/components/ui"
+		]
+	}
+}
