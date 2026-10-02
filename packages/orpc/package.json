@@ -26,7 +26,6 @@
 		"./routers/middleware/superjson/handler": "./dist/routers/middleware/superjson/handler.mjs",
 		"./routers/middleware/superjson/link": "./dist/routers/middleware/superjson/link.mjs",
 		"./routers/middleware/superjson/serializer": "./dist/routers/middleware/superjson/serializer.mjs",
-		"./routers/todo": "./dist/routers/todo/index.mjs",
 		"./server": "./dist/server/index.mjs",
 		"./package.json": "./package.json"
 	},

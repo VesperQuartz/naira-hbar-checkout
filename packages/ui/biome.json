@@ -1,3 +1,29 @@
 {
-	"extends": "//"
+	"extends": "//",
+	"overrides": [
+		{
+			"includes": ["src/components/**"],
+			"linter": {
+				"rules": {
+					"a11y": {
+						"noLabelWithoutControl": "off",
+						"useFocusableInteractive": "off",
+						"useKeyWithClickEvents": "off",
+						"useSemanticElements": "off"
+					},
+					"correctness": {
+						"useExhaustiveDependencies": "off"
+					},
+					"security": {
+						"noDangerouslySetInnerHtml": "off"
+					},
+					"suspicious": {
+						"noArrayIndexKey": "off",
+						"noDocumentCookie": "off",
+						"noExplicitAny": "off"
+					}
+				}
+			}
+		}
+	]
 }

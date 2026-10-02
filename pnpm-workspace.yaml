@@ -68,5 +68,4 @@ minimumReleaseAgeExclude:
   - expo-modules-jsi@57.0.3
   - expo-server@57.0.1
   - expo@57.0.6
-  - prettier-plugin-tailwindcss@0.8.1
   - tsdown@0.22.8

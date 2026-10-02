@@ -8,7 +8,7 @@
 			"!.next",
 			"!dist",
 			"!build",
-			"!*.gen.ts",
+			"!**/*.gen.ts",
 			"!src/components/ui"
 		]
 	}

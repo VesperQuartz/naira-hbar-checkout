@@ -4,8 +4,8 @@
 	"type": "module",
 	"private": true,
 	"scripts": {
-		"lint": "eslint",
-		"format": "prettier --write \"**/*.{ts,tsx}\"",
+		"lint": "biome check",
+		"format": "biome format --write .",
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
@@ -36,12 +36,10 @@
 	},
 	"devDependencies": {
 		"@tailwindcss/vite": "^4.3.3",
-		"@tanstack/eslint-config": "^0.4.0",
 		"@turbo/gen": "^2.11.6",
 		"@types/node": "^26.6.4",
 		"@types/react": "^19.3.0",
 		"@types/react-dom": "^19.3.0",
-		"eslint": "^10.11.0",
 		"tailwindcss": "^4.3.3",
 		"typescript": "7.0.2"
 	},
