@@ -4,17 +4,16 @@
 	"version": "1.0.0",
 	"create-scaffold-hbar": {
 		"capabilities": {
-			"frontend": ["tanstackstart-app"],
+			"frontend": ["none"],
 			"solidityFramework": ["foundry"],
 			"packageManager": ["none"]
 		},
 		"defaults": {
 			"packageManager": "none",
-			"frontend": "nextjs-app",
-			"solidityFramework": "foundry"
+			"frontend": "tanstackstart-app",
+			"solidityFramework": "none"
 		},
 		"outro": {
-			"installCommand": "pnpm install",
 			"steps": [
 				"+Template setup note",
 				"Use this template with pnpm at the project root."
