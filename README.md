@@ -26,6 +26,37 @@ pnpm dev
 
 The app boots with no secrets configured. Fill in only what you need (see the table below).
 
+## What's inside
+
+A payment demo is the excuse — the point is the **full-stack Hedera app skeleton around it**. Everything below is wired together, typed end-to-end, and runs with zero configuration:
+
+**App shell**
+
+- **[TanStack Start](https://tanstack.com/start)** — SSR React 19 app with file-based routing; the root route *is* the checkout terminal
+- **shadcn/ui + Tailwind** — the full component kit (dialog, sidebar, chart, command, calendar, …) vendored in `packages/ui`, so you own the code
+- **wagmi + viem** — EIP-6963 wallet connection with Hedera testnet chain config built in (HashPack, MetaMask, Kabila, …)
+- **TanStack Query & Form**, sonner toasts, progress bars — the boring plumbing is already done
+
+**API & data**
+
+- **oRPC** — one router with types shared from server to client: the page calls `client.checkout.quote()` with full autocompletion, no codegen step
+- **Better Auth** — session config with a Drizzle adapter, optional like everything else
+- **Drizzle + Postgres** — order-history schema in `packages/storage`, optional at runtime
+- **Zod-validated config** — every env var parsed in one place with safe defaults, which is why `.env` is optional rather than required
+
+**Contracts & Hedera**
+
+- **Foundry** project with `CheckoutRouter.sol`, 25 passing tests, and a testnet deploy script
+- **Chainlink price check, SaucerSwap swap, HCS receipts** — the whole payment path implemented with *typed fallbacks*, so unset integrations report why and the payment still settles instead of crashing
+- **Proof scripts** — `pnpm --filter @repo/orpc proof` (order → pay → receipt) and `smoke`, both runnable against testnet
+
+**Tooling**
+
+- **Turborepo + pnpm workspaces**, **Biome** for lint/format, `pnpm typecheck`, `node:test` unit tests + `forge test`
+- **AGENTS.md** — kept-accurate repo notes for AI coding tools
+
+**Keep what you need** — fork the checkout flow into your own shop, or strip it and take the app shell + typed API + contract as a Hedera starter.
+
 ## Prerequisites
 
 - **Node.js** 20.18.3 or newer
@@ -159,16 +190,16 @@ naira-hbar-checkout/
 ├── LICENSE              MIT
 ├── .env.example         all variable names, no values
 ├── docker-compose.yml   local Postgres for the optional order history
-└── packages/
-    ├── contract/        Foundry: CheckoutRouter.sol, tests, deploy script
-    ├── storage/         Drizzle schema + Postgres access (optional at runtime)
-    ├── auth/            Better Auth config
-    ├── orpc/            typed API routers (server only)
-    ├── shared/          shared types and validated config
-    ├── ui/              shadcn/ui components
-    └── ...
+├── packages/
+│   ├── foundry/        Foundry: CheckoutRouter.sol, tests, deploy script
+│   ├── storage/        Drizzle schema + Postgres access (optional at runtime)
+│   ├── auth/           Better Auth config
+│   ├── orpc/           typed API routers (server only)
+│   ├── shared/         shared types and validated config
+│   ├── ui/             shadcn/ui components
+│   └── ...
 └── apps/
-    └── web.start/       TanStack Start app (checkout UI)
+    └── web.start/      TanStack Start app (checkout UI)
 ```
 
 ## Running tests
