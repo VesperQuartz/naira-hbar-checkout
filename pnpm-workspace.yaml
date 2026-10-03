@@ -10,6 +10,9 @@ allowBuilds:
   esbuild: true
   msgpackr-extract: true
   protobufjs: true
+  bufferutil: true
+  keccak: true
+  utf-8-validate: true
   msw: true
   unrs-resolver: true
 minimumReleaseAgeExclude:

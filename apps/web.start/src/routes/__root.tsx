@@ -19,7 +19,7 @@ export interface RootContext {
 
 const RootDocument = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<html lang="en">
+		<html lang="en" className="dark">
 			<head>
 				<HeadContent />
 			</head>
@@ -57,6 +57,10 @@ export const Route = createRootRouteWithContext<RootContext>()({
 			{
 				name: "viewport",
 				content: "width=device-width, initial-scale=1",
+			},
+			{
+				name: "theme-color",
+				content: "#05070d",
 			},
 			{
 				title: "Naira HBAR Checkout",

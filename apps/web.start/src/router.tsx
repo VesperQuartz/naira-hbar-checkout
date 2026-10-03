@@ -7,8 +7,10 @@ import {
 } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { parse, stringify } from "jsurl2";
+import { WagmiProvider } from "wagmi";
 import { DefaultCatchBoundary } from "@/components/catch-boundary";
 import { NotFound } from "@/components/not-found";
+import { wagmiConfig } from "@/lib/wagmi/config";
 import { routeTree } from "./routeTree.gen";
 
 export const getRouter = () => {
@@ -28,9 +30,11 @@ export const getRouter = () => {
 		},
 		Wrap: (props: { children: React.ReactNode }) => {
 			return (
-				<QueryClientProvider client={rqContext.queryClient}>
-					{props.children}
-				</QueryClientProvider>
+				<WagmiProvider config={wagmiConfig}>
+					<QueryClientProvider client={rqContext.queryClient}>
+						{props.children}
+					</QueryClientProvider>
+				</WagmiProvider>
 			);
 		},
 	});

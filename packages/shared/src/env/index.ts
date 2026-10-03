@@ -34,6 +34,11 @@ const envSchema = z.readonly(
 		// JSON-RPC endpoint used to read the feed off-chain for quotes.
 		// Optional; defaults to the Hashio endpoint for HEDERA_NETWORK.
 		CHAINLINK_RPC_URL: optionalString,
+		// Deployed CheckoutRouter the web UI sends `pay()` transactions to.
+		// Optional and boot-safe: without it the checkout shows a configure
+		// hint instead of a pay button (never commit real keys — this is a
+		// public on-chain address).
+		CHECKOUT_CONTRACT_ADDRESS: optionalString,
 		HCS_TOPIC_ID: optionalString,
 		SAUCERSWAP_ROUTER: optionalString,
 		STABLECOIN_TOKEN_ID: optionalString,

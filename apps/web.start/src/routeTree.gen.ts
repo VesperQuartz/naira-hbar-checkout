@@ -9,30 +9,19 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as dashboardRouteRouteImport } from './routes/(dashboard)/route'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
-import { Route as dashboardIndexRouteImport } from './routes/(dashboard)/index'
-import { Route as CheckoutIndexRouteImport } from './routes/checkout/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiRpcSplatRouteImport } from './routes/api/rpc/$'
 
-const dashboardRouteRoute = dashboardRouteRouteImport.update({
-  id: '/(dashboard)',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const authLoginRoute = authLoginRouteImport.update({
   id: '/(auth)/login',
   path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const dashboardIndexRoute = dashboardIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => dashboardRouteRoute,
-} as any)
-const CheckoutIndexRoute = CheckoutIndexRouteImport.update({
-  id: '/checkout/',
-  path: '/checkout/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -47,58 +36,46 @@ const ApiRpcSplatRoute = ApiRpcSplatRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/login': typeof authLoginRoute
-  '/': typeof dashboardIndexRoute
-  '/checkout/': typeof CheckoutIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/login': typeof authLoginRoute
-  '/': typeof dashboardIndexRoute
-  '/checkout': typeof CheckoutIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/(dashboard)': typeof dashboardRouteRouteWithChildren
+  '/': typeof IndexRoute
   '/(auth)/login': typeof authLoginRoute
-  '/(dashboard)/': typeof dashboardIndexRoute
-  '/checkout/': typeof CheckoutIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/login' | '/' | '/checkout/' | '/api/auth/$' | '/api/rpc/$'
+  fullPaths: '/' | '/login' | '/api/auth/$' | '/api/rpc/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/' | '/checkout' | '/api/auth/$' | '/api/rpc/$'
-  id:
-    | '__root__'
-    | '/(dashboard)'
-    | '/(auth)/login'
-    | '/(dashboard)/'
-    | '/checkout/'
-    | '/api/auth/$'
-    | '/api/rpc/$'
+  to: '/' | '/login' | '/api/auth/$' | '/api/rpc/$'
+  id: '__root__' | '/' | '/(auth)/login' | '/api/auth/$' | '/api/rpc/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  dashboardRouteRoute: typeof dashboardRouteRouteWithChildren
+  IndexRoute: typeof IndexRoute
   authLoginRoute: typeof authLoginRoute
-  CheckoutIndexRoute: typeof CheckoutIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiRpcSplatRoute: typeof ApiRpcSplatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/(dashboard)': {
-      id: '/(dashboard)'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof dashboardRouteRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(auth)/login': {
@@ -106,20 +83,6 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof authLoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(dashboard)/': {
-      id: '/(dashboard)/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof dashboardIndexRouteImport
-      parentRoute: typeof dashboardRouteRoute
-    }
-    '/checkout/': {
-      id: '/checkout/'
-      path: '/checkout'
-      fullPath: '/checkout/'
-      preLoaderRoute: typeof CheckoutIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/auth/$': {
@@ -139,22 +102,9 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface dashboardRouteRouteChildren {
-  dashboardIndexRoute: typeof dashboardIndexRoute
-}
-
-const dashboardRouteRouteChildren: dashboardRouteRouteChildren = {
-  dashboardIndexRoute: dashboardIndexRoute,
-}
-
-const dashboardRouteRouteWithChildren = dashboardRouteRoute._addFileChildren(
-  dashboardRouteRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
-  dashboardRouteRoute: dashboardRouteRouteWithChildren,
+  IndexRoute: IndexRoute,
   authLoginRoute: authLoginRoute,
-  CheckoutIndexRoute: CheckoutIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiRpcSplatRoute: ApiRpcSplatRoute,
 }

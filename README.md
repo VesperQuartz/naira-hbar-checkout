@@ -60,8 +60,8 @@ Copy `.env.example` to `.env` (or `.envrc`) and fill in what you use. Nothing se
 
 ## How it works
 
-1. The page shows a price in ₦. A fixed demo ₦/USD rate times the Chainlink HBAR/USD price tells the customer how much HBAR that is.
-2. The customer clicks **Pay with HBAR** from a connected wallet and sends HBAR to the `CheckoutRouter` contract.
+1. The customer enters a ₦ amount. The page prices it with the demo ₦/USD rate times the Chainlink HBAR/USD price, then **locks the quote** — an order row that freezes the HBAR amount, the quoted feed price and a 5-minute expiry.
+2. The customer connects a browser wallet (injected/EIP-6963), switches to Hedera testnet, and sends HBAR to the `CheckoutRouter` contract with that reference and quoted price.
 3. The contract reads Chainlink HBAR/USD itself and rejects the payment if the round is incomplete, the price is non-positive, or it has gone stale.
 4. The server swaps the HBAR into a stablecoin on SaucerSwap so the merchant keeps stable value (until `SAUCERSWAP_ROUTER` is set, this step reports its typed fallback and the payment still settles).
 5. A receipt message (order id, amounts, timestamps, transaction references) is submitted to an HCS topic and is readable on Hashscan.
@@ -183,6 +183,7 @@ cd packages/contract && forge test
 ## Known limits and next steps
 
 - The ₦ rate is a **fixed demo figure** (`DEMO_NGN_PER_USD`). A live Naira rate API is the obvious next step.
-- The **database is optional**: without `DATABASE_URL` the app still runs, it just keeps no order history.
+- **Wallet connection is browser-extension only** (injected / EIP-6963: MetaMask, HashPack, Kabila, …) — no cloud service is required, so the app connects out of the box. Layering Reown AppKit on top of wagmi later adds WalletConnect/QR support, but needs a free `projectId` from [dashboard.reown.com](https://dashboard.reown.com).
+- The **database is optional**: without `DATABASE_URL` the app still runs, it just keeps no order history — quote preview works, but **Lock quote** (order creation) needs the database.
 - Testnet liquidity and feed availability drive which swap/oracle paths are documented above.
 - This is a **developer starter on testnet**: production use would need real rate feeds, proper key management and an audit.

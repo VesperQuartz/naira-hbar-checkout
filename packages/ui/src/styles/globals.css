@@ -2,6 +2,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource-variable/archivo/standard.css";
 
 @custom-variant dark (&:is(.dark *));
 @source "../../../apps/**/*.{ts,tsx}";
@@ -32,7 +33,9 @@
 	--chart-3: oklch(0.546 0.245 262.881);
 	--chart-4: oklch(0.488 0.243 264.376);
 	--chart-5: oklch(0.424 0.199 265.638);
-	--radius: 0.625rem;
+	--radius: 0.375rem;
+	/* Functional signal colour — quote countdown, warnings. Not decoration. */
+	--signal: oklch(0.82 0.15 70);
 	--sidebar: oklch(0.985 0 0);
 	--sidebar-foreground: oklch(0.145 0 0);
 	--sidebar-primary: oklch(0.205 0 0);
@@ -43,38 +46,44 @@
 	--sidebar-ring: oklch(0.708 0 0);
 }
 
+/*
+ * The checkout ships dark — a night-desk exchange terminal: blue-black
+ * void, naira-green as the money colour, slate structure, chalk text.
+ * Light-mode shadcn values above stay as the (unused) baseline.
+ */
 .dark {
-	--background: oklch(0.145 0 0);
-	--foreground: oklch(0.985 0 0);
-	--card: oklch(0.205 0 0);
-	--card-foreground: oklch(0.985 0 0);
-	--popover: oklch(0.205 0 0);
-	--popover-foreground: oklch(0.985 0 0);
-	--primary: oklch(0.922 0 0);
-	--primary-foreground: oklch(0.205 0 0);
-	--secondary: oklch(0.269 0 0);
-	--secondary-foreground: oklch(0.985 0 0);
-	--muted: oklch(0.269 0 0);
-	--muted-foreground: oklch(0.708 0 0);
-	--accent: oklch(0.269 0 0);
-	--accent-foreground: oklch(0.985 0 0);
-	--destructive: oklch(0.704 0.191 22.216);
-	--border: oklch(1 0 0 / 10%);
-	--input: oklch(1 0 0 / 15%);
-	--ring: oklch(0.556 0 0);
-	--chart-1: oklch(0.809 0.105 251.813);
-	--chart-2: oklch(0.623 0.214 259.815);
+	color-scheme: dark;
+	--background: oklch(0.15 0.016 252);
+	--foreground: oklch(0.93 0.012 245);
+	--card: oklch(0.195 0.02 252);
+	--card-foreground: oklch(0.93 0.012 245);
+	--popover: oklch(0.21 0.02 252);
+	--popover-foreground: oklch(0.93 0.012 245);
+	--primary: oklch(0.74 0.166 152);
+	--primary-foreground: oklch(0.17 0.03 152);
+	--secondary: oklch(0.26 0.022 252);
+	--secondary-foreground: oklch(0.93 0.012 245);
+	--muted: oklch(0.24 0.02 252);
+	--muted-foreground: oklch(0.64 0.028 246);
+	--accent: oklch(0.26 0.022 252);
+	--accent-foreground: oklch(0.93 0.012 245);
+	--destructive: oklch(0.68 0.18 22);
+	--border: oklch(0.93 0.02 250 / 12%);
+	--input: oklch(0.93 0.02 250 / 15%);
+	--ring: oklch(0.74 0.166 152);
+	--chart-1: oklch(0.74 0.166 152);
+	--chart-2: oklch(0.82 0.15 70);
 	--chart-3: oklch(0.546 0.245 262.881);
 	--chart-4: oklch(0.488 0.243 264.376);
 	--chart-5: oklch(0.424 0.199 265.638);
-	--sidebar: oklch(0.205 0 0);
-	--sidebar-foreground: oklch(0.985 0 0);
-	--sidebar-primary: oklch(0.488 0.243 264.376);
-	--sidebar-primary-foreground: oklch(0.985 0 0);
-	--sidebar-accent: oklch(0.269 0 0);
-	--sidebar-accent-foreground: oklch(0.985 0 0);
-	--sidebar-border: oklch(1 0 0 / 10%);
-	--sidebar-ring: oklch(0.556 0 0);
+	--sidebar: oklch(0.195 0.02 252);
+	--sidebar-foreground: oklch(0.93 0.012 245);
+	--sidebar-primary: oklch(0.74 0.166 152);
+	--sidebar-primary-foreground: oklch(0.17 0.03 152);
+	--sidebar-accent: oklch(0.26 0.022 252);
+	--sidebar-accent-foreground: oklch(0.93 0.012 245);
+	--sidebar-border: oklch(0.93 0.02 250 / 12%);
+	--sidebar-ring: oklch(0.74 0.166 152);
 }
 
 @theme inline {
@@ -116,7 +125,9 @@
 	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
 	--color-sidebar-border: var(--sidebar-border);
 	--color-sidebar-ring: var(--sidebar-ring);
+	--font-sans: "Archivo Variable", ui-sans-serif, system-ui, sans-serif;
 	--font-mono: "JetBrains Mono Variable", monospace;
+	--color-signal: var(--signal);
 }
 
 @layer base {
@@ -125,5 +136,62 @@
 	}
 	body {
 		@apply bg-background text-foreground;
+	}
+}
+
+/* ---- Naira terminal furniture -------------------------------------- */
+
+/* Full-page hairline bench: the grid the instrument sits on. */
+.grid-backdrop {
+	background-image:
+		linear-gradient(to right, oklch(1 0 0 / 2.5%) 1px, transparent 1px),
+		linear-gradient(to bottom, oklch(1 0 0 / 2.5%) 1px, transparent 1px);
+	background-size: 56px 56px;
+	background-position: center top;
+}
+
+/* Display headings ride Archivo's width axis — the signal-board voice. */
+.display-wide {
+	font-variation-settings: "wdth" 114;
+	letter-spacing: -0.02em;
+}
+
+/* Split-flap odometer cells (see components/odometer.tsx). */
+.odo-cell {
+	display: inline-block;
+	height: 1em;
+	line-height: 1em;
+	overflow: hidden;
+	vertical-align: bottom;
+}
+.odo-strip {
+	display: flex;
+	flex-direction: column;
+	transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+	will-change: transform;
+}
+.odo-digit {
+	display: block;
+	height: 1em;
+	line-height: 1em;
+}
+
+/* Soft money-green bloom behind the quote readout. */
+.panel-glow::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background: radial-gradient(
+		70% 90% at 28% 0%,
+		oklch(0.74 0.166 152 / 9%),
+		transparent 72%
+	);
+	pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.odo-strip {
+		transition: none;
 	}
 }

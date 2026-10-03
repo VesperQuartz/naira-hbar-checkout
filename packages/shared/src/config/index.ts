@@ -19,6 +19,8 @@ export type IntegrationConfig = {
 	readonly chainlinkHbarUsdFeed: string | undefined;
 	/** JSON-RPC URL for off-chain feed reads; `undefined` → Hashio default. */
 	readonly chainlinkRpcUrl: string | undefined;
+	/** Deployed CheckoutRouter the browser sends `pay()` to; `undefined` → configure hint. */
+	readonly checkoutContractAddress: string | undefined;
 	readonly hcsTopicId: string | undefined;
 	readonly saucerswapRouter: string | undefined;
 	readonly stablecoinTokenId: string | undefined;
@@ -50,6 +52,7 @@ export const config: CheckoutConfig = {
 		network: env.HEDERA_NETWORK,
 		chainlinkHbarUsdFeed: env.CHAINLINK_HBAR_USD_FEED,
 		chainlinkRpcUrl: env.CHAINLINK_RPC_URL,
+		checkoutContractAddress: env.CHECKOUT_CONTRACT_ADDRESS,
 		hcsTopicId: env.HCS_TOPIC_ID,
 		saucerswapRouter: env.SAUCERSWAP_ROUTER,
 		stablecoinTokenId: env.STABLECOIN_TOKEN_ID,

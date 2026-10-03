@@ -99,7 +99,12 @@ export const checkoutRouter = {
 			if (Result.isError(inserted)) {
 				throw storageErrorToORPC(inserted.error);
 			}
-			return inserted.value;
+			// The browser pays this contract directly, so the address rides
+			// along with the order instead of a second public env var.
+			return {
+				...inserted.value,
+				contractAddress: config.integration.checkoutContractAddress ?? null,
+			};
 		}),
 	/** Read an order back by its id, with its HCS receipt when written. */
 	status: base
