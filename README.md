@@ -7,7 +7,7 @@ A `scaffold-hbar` template — a developer starter on testnet, not a production 
 ## Quick start
 
 ```bash
-npm create scaffold-hbar@latest -- --template VesperQuartz/naira-hbar-checkout
+npm create scaffold-hbar@latest --template VesperQuartz/naira-hbar-checkout
 cd naira-hbar-checkout
 pnpm install
 cp .env.example .env
@@ -111,6 +111,8 @@ Copy `.env.example` to `.env` (or `.envrc`) and fill in what you use. Nothing se
 
 - **Oracle.** HBAR/USD comes from the Hedera-testnet Chainlink aggregator `0x59bC155EB6c6C415fE43255aF66EcF0523c92B4a` (8 decimals). The contract reverts a payment when the round is incomplete, the answer is non-positive, the answer is older than `MAX_PRICE_AGE_SECONDS`, or the off-chain quote deviates from it by more than `PRICE_TOLERANCE_BPS`. Quotes read the same feed over `CHAINLINK_RPC_URL`; with no feed configured they fall back to a fixed demo HBAR price so the app still boots. The testnet adapter refreshes slower than an hour (3.5 h+ observed between rounds), hence the 24 h deploy default.
 - **Swap.** Set `SAUCERSWAP_ROUTER`, `STABLECOIN_TOKEN_ID` and `MERCHANT_ACCOUNT_ID` to wire the HBAR → stablecoin swap. In the proof run above those were unset, so the swap step reported a typed "not configured" reason, the payment and receipt still settled, and the receipt records `settlementState: "skipped"` — the documented fallback.
+
+  *Verified 2026-10-03 against live testnet state: SaucerSwap's testnet deployment is real and active (V1 router `0.0.19264`, V1 factory `0.0.9959`, V2 factory `0.0.1197038`), but no HBAR/USDC pool exists on it — the V1 factory's `getPair` returns the zero address and the V2 factory's `getPool` returns zero at every fee tier for WHBAR/USDC (`0.0.429274`), while a control query for WHBAR/SAUCE returns a real pool, confirming the queries are sound. There is simply no HBAR → stablecoin route on testnet today, so the fallback is a documented answer rather than a placeholder. Wiring it later needs the three env vars above plus the router call itself.*
 
 ## Associating the stablecoin token
 
@@ -216,5 +218,5 @@ cd packages/foundry && forge test
 - The ₦ rate is a **fixed demo figure** (`DEMO_NGN_PER_USD`). A live Naira rate API is the obvious next step.
 - **Wallet connection is browser-extension only** (injected / EIP-6963: MetaMask, HashPack, Kabila, …) — no cloud service is required, so the app connects out of the box. Layering Reown AppKit on top of wagmi later adds WalletConnect/QR support, but needs a free `projectId` from [dashboard.reown.com](https://dashboard.reown.com).
 - The **database is optional**: without `DATABASE_URL` the app still runs, it just keeps no order history — quote preview works, but **Lock quote** (order creation) needs the database.
-- Testnet liquidity and feed availability drive which swap/oracle paths are documented above.
+- Testnet liquidity and feed availability drive which swap/oracle paths are documented above (verified: no HBAR/USDC pool on SaucerSwap testnet as of Oct 2026).
 - This is a **developer starter on testnet**: production use would need real rate feeds, proper key management and an audit.
