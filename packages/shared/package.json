@@ -14,7 +14,9 @@
 	},
 	"exports": {
 		".": "./dist/index.mjs",
+		"./config": "./dist/config/index.mjs",
 		"./env": "./dist/env/index.mjs",
+		"./pricing": "./dist/pricing/index.mjs",
 		"./query/client": "./dist/query/client.mjs",
 		"./package.json": "./package.json"
 	},
