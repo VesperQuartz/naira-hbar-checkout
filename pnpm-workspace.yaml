@@ -2,6 +2,10 @@ packages:
   - "apps/*"
   - "packages/*"
 minimumReleaseAgeStrict: true
+# Single React type copy: use-mask-input d.ts otherwise picks the hoisted
+# @types/react while the app uses its own, breaking ref assignability.
+overrides:
+  "@types/react": 19.3.0
 allowBuilds:
   esbuild: true
   msgpackr-extract: true

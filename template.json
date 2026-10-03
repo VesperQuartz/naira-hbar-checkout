@@ -1,0 +1,18 @@
+{
+	"name": "naira-hbar-checkout",
+	"description": "Naira-priced checkout paid in HBAR, swapped to a stablecoin via SaucerSwap, with Chainlink pricing and HCS receipts",
+	"version": "1.0.0",
+	"create-scaffold-hbar": {
+		"capabilities": {
+			"frontend": ["none"],
+			"solidityFramework": ["foundry"],
+			"packageManager": ["none"]
+		},
+		"defaults": {
+			"installCommand": "pnpm install",
+			"packageManager": "pnpm",
+			"frontend": "none",
+			"solidityFramework": "foundry"
+		}
+	}
+}

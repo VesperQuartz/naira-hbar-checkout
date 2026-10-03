@@ -34,3 +34,13 @@ npm-debug.log*
 # Misc
 .DS_Store
 *.pem
+
+# Internal bounty working files — not part of the template
+plan.md
+SPEC.md
+.scratch/
+
+# Foundry
+packages/contract/out/
+packages/contract/cache/
+packages/contract/broadcast/
