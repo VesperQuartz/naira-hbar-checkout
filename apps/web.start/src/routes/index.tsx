@@ -68,12 +68,14 @@ const summarizeError = (error: unknown): string => {
 	const message = error instanceof Error ? error.message : String(error);
 	const friendly = /reject/i.test(message)
 		? "Request rejected in the wallet."
-		: /insufficient funds/i.test(message)
-			? "Not enough HBAR to cover the payment and gas."
-			: /chain|network/i.test(message) &&
-					/add|switch|unsupported/i.test(message)
-				? "Your wallet does not have Hedera testnet yet — approving the switch should add it."
-				: message.replace(/\(request id:.*$/i, "").trim();
+		: /authorized by the user|code:?\s*4100/i.test(message)
+			? "Your wallet has not authorized this site to send transactions — disconnect the site in your wallet (or reconnect here) and try again."
+			: /insufficient funds/i.test(message)
+				? "Not enough HBAR to cover the payment and gas."
+				: /chain|network/i.test(message) &&
+						/add|switch|unsupported/i.test(message)
+					? "Your wallet does not have Hedera testnet yet — approving the switch should add it."
+					: message.replace(/\(request id:.*$/i, "").trim();
 	return friendly.length > 160 ? `${friendly.slice(0, 157)}…` : friendly;
 };
 
@@ -160,7 +162,7 @@ const Checkout = () => {
 				Boolean((window as { ethereum?: unknown }).ethereum),
 		);
 	}, []);
-	const { address, isConnected, chainId } = useAccount();
+	const { address, isConnected, chainId, connector } = useAccount();
 	const {
 		connectors,
 		connect,
@@ -244,7 +246,7 @@ const Checkout = () => {
 		}
 	};
 
-	const runPrimaryAction = () => {
+	const runPrimaryAction = async () => {
 		// Settlement already paid on chain but confirm failed → retry it.
 		if (confirmMutation.isError && txHash && locked) {
 			confirmMutation.mutate({
@@ -280,6 +282,25 @@ const Checkout = () => {
 		}
 		if (!locked.contractAddress) {
 			return;
+		}
+		// Some wallets (HashPack) can hold a stale or eth_accounts-only
+		// session while wagmi still reports "connected" — the send then
+		// fails with EIP-1193 4100 and no prompt ever appears. Re-assert
+		// the account grant right before paying; a healthy session answers
+		// silently, an expired one opens the approval popup.
+		try {
+			const provider = (await connector?.getProvider()) as
+				| { request?: (args: { method: string }) => Promise<unknown> }
+				| undefined;
+			if (provider?.request) {
+				await provider.request({ method: "eth_requestAccounts" });
+			}
+		} catch (error) {
+			if ((error as { code?: number }).code === 4001) {
+				// The user declined to (re)connect — don't follow up with a
+				// transaction they clearly don't want to approve yet.
+				return;
+			}
 		}
 		// The contract re-reads Chainlink and re-checks this quoted price on
 		// chain; value is the HBAR leg in wei.

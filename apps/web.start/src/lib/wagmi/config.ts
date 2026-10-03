@@ -26,13 +26,19 @@ export const hederaTestnet = defineChain({
 
 /**
  * Wagmi config for the checkout. Browser-wallet (EIP-6963/injected) only —
- * no WalletConnect cloud projectId, so the app boots and connects with zero
- * external services configured. `ssr` keeps renders deterministic under
+ * no WalletConnect cloud projectId, so the app connects out of the box with
+ * zero external services configured. `ssr` keeps renders deterministic under
  * TanStack Start; account state hydrates after mount.
+ *
+ * `shimDisconnect: false` deliberately skips wagmi's `wallet_requestPermissions`
+ * short-cut on fresh connects and always runs `eth_requestAccounts` — the
+ * full per-dapp approval. Strict wallets like HashPack only authorize
+ * `eth_sendTransaction` when the session was granted that way; a bare
+ * `eth_accounts` permission yields EIP-1193 4100 "not authorized" on send.
  */
 export const wagmiConfig = createConfig({
 	chains: [hederaTestnet],
-	connectors: [injected()],
+	connectors: [injected({ shimDisconnect: false })],
 	transports: { [hederaTestnet.id]: http() },
 	ssr: true,
 });
