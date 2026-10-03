@@ -14,6 +14,12 @@ const App = () => {
 					<p>We&apos;ve already added the button component for you.</p>
 					<Button
 						className="mt-2 cursor-pointer"
+						onClick={() => navigate({ to: "/checkout" })}
+					>
+						Open the checkout demo
+					</Button>
+					<Button
+						className="mt-2 ml-2 cursor-pointer"
 						onClick={async () => {
 							await authClient.signOut();
 							navigate({

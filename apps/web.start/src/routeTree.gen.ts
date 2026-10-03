@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as dashboardRouteRouteImport } from './routes/(dashboard)/route'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as dashboardIndexRouteImport } from './routes/(dashboard)/index'
+import { Route as CheckoutIndexRouteImport } from './routes/checkout/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiRpcSplatRouteImport } from './routes/api/rpc/$'
 
@@ -29,6 +30,11 @@ const dashboardIndexRoute = dashboardIndexRouteImport.update({
   path: '/',
   getParentRoute: () => dashboardRouteRoute,
 } as any)
+const CheckoutIndexRoute = CheckoutIndexRouteImport.update({
+  id: '/checkout/',
+  path: '/checkout/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -43,12 +49,14 @@ const ApiRpcSplatRoute = ApiRpcSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/login': typeof authLoginRoute
   '/': typeof dashboardIndexRoute
+  '/checkout/': typeof CheckoutIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof authLoginRoute
   '/': typeof dashboardIndexRoute
+  '/checkout': typeof CheckoutIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
 }
@@ -57,19 +65,21 @@ export interface FileRoutesById {
   '/(dashboard)': typeof dashboardRouteRouteWithChildren
   '/(auth)/login': typeof authLoginRoute
   '/(dashboard)/': typeof dashboardIndexRoute
+  '/checkout/': typeof CheckoutIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/login' | '/' | '/api/auth/$' | '/api/rpc/$'
+  fullPaths: '/login' | '/' | '/checkout/' | '/api/auth/$' | '/api/rpc/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/' | '/api/auth/$' | '/api/rpc/$'
+  to: '/login' | '/' | '/checkout' | '/api/auth/$' | '/api/rpc/$'
   id:
     | '__root__'
     | '/(dashboard)'
     | '/(auth)/login'
     | '/(dashboard)/'
+    | '/checkout/'
     | '/api/auth/$'
     | '/api/rpc/$'
   fileRoutesById: FileRoutesById
@@ -77,6 +87,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   dashboardRouteRoute: typeof dashboardRouteRouteWithChildren
   authLoginRoute: typeof authLoginRoute
+  CheckoutIndexRoute: typeof CheckoutIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiRpcSplatRoute: typeof ApiRpcSplatRoute
 }
@@ -103,6 +114,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof dashboardIndexRouteImport
       parentRoute: typeof dashboardRouteRoute
+    }
+    '/checkout/': {
+      id: '/checkout/'
+      path: '/checkout'
+      fullPath: '/checkout/'
+      preLoaderRoute: typeof CheckoutIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/auth/$': {
       id: '/api/auth/$'
@@ -136,6 +154,7 @@ const dashboardRouteRouteWithChildren = dashboardRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   dashboardRouteRoute: dashboardRouteRouteWithChildren,
   authLoginRoute: authLoginRoute,
+  CheckoutIndexRoute: CheckoutIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiRpcSplatRoute: ApiRpcSplatRoute,
 }
