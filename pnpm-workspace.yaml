@@ -9,6 +9,7 @@ overrides:
 allowBuilds:
   esbuild: true
   msgpackr-extract: true
+  protobufjs: true
   msw: true
   unrs-resolver: true
 minimumReleaseAgeExclude:
