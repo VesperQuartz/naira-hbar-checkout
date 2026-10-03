@@ -4,17 +4,76 @@
 	"version": "1.0.0",
 	"create-scaffold-hbar": {
 		"capabilities": {
-			"frontend": ["none"],
+			"frontend": ["nextjs-app"],
 			"solidityFramework": ["foundry"],
 			"packageManager": ["none"]
 		},
 		"defaults": {
 			"packageManager": "none",
-			"frontend": "none",
+			"frontend": "nextjs-app",
 			"solidityFramework": "foundry"
 		},
 		"outro": {
-			"installCommand": "pnpm install"
+			"installCommand": "pnpm install",
+			"sections": [
+				{
+					"title": "Run locally",
+					"steps": [
+						{
+							"label": "Start the dev server (works with no .env)",
+							"command": "pnpm dev",
+							"url": "http://localhost:3000"
+						}
+					]
+				},
+				{
+					"title": "Checks",
+					"steps": [
+						{ "label": "Lint (Biome + forge fmt)", "command": "pnpm lint" },
+						{ "label": "Typecheck", "command": "pnpm typecheck" },
+						{ "label": "Tests (node:test + forge)", "command": "pnpm test" }
+					]
+				},
+				{
+					"title": "Deploy the contract to Hedera testnet",
+					"steps": [
+						{
+							"text": "Foundry (forge) must be installed: https://book.getfoundry.sh"
+						},
+						{
+							"label": "Set your deployer key",
+							"command": "export HEDERA_OPERATOR_PRIVATE_KEY=0x..."
+						},
+						{
+							"label": "Deploy",
+							"command": "cd packages/foundry && forge script script/Deploy.s.sol --rpc-url https://testnet.hashio.io/api --private-key $HEDERA_OPERATOR_PRIVATE_KEY --broadcast"
+						},
+						{
+							"label": "Then put the address in .env as CHECKOUT_CONTRACT_ADDRESS",
+							"text": "See README.md → Configuration"
+						}
+					]
+				},
+				{
+					"title": "Live proof (optional)",
+					"steps": [
+						{
+							"label": "Create the HCS receipt topic once",
+							"command": "pnpm --filter @repo/orpc hcs:topic"
+						},
+						{ "label": "Order → pay → receipt", "command": "pnpm --filter @repo/orpc proof" }
+					]
+				},
+				{
+					"title": "Docs",
+					"steps": [
+						{
+							"label": "Full walkthrough, proof links, known limits",
+							"url": "https://github.com/VesperQuartz/naira-hbar-checkout#readme"
+						}
+					]
+				}
+			]
 		}
 	}
 }
