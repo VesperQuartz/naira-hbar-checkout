@@ -19,7 +19,9 @@
 	},
 	"exports": {
 		".": "./dist/index.mjs",
+		"./orders": "./dist/orders.mjs",
 		"./schema/auth.schema": "./dist/schema/auth.schema.mjs",
+		"./schema/order.schema": "./dist/schema/order.schema.mjs",
 		"./package.json": "./package.json"
 	},
 	"dependencies": {

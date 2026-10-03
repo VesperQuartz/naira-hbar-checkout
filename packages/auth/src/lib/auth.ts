@@ -1,5 +1,6 @@
 import { drizzleAdapter } from "@better-auth/drizzle-adapter/relations-v2";
 import { db } from "@repo/storage";
+import * as authRelations from "@repo/storage/schema/auth.schema";
 import { type BetterAuthOptions, betterAuth } from "better-auth";
 import {
 	admin as adminPlugin,
@@ -10,9 +11,12 @@ import {
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 import { ac, adminRole, customRole, userRole } from "./permission";
 
+const { authRelations: _authRelations, ...tables } = authRelations as any;
+
 const authOptions: BetterAuthOptions = {
 	database: drizzleAdapter(db, {
 		provider: "pg",
+		schema: tables,
 	}),
 	emailAndPassword: {
 		enabled: true,

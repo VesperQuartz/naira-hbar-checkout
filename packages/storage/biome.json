@@ -1,6 +1,6 @@
 {
 	"extends": "//",
 	"files": {
-		"includes": ["**", "!src/schema/auth.schema.ts"]
+		"includes": ["**", "!src/schema/auth.schema.ts", "!drizzle"]
 	}
 }
