@@ -2,6 +2,10 @@
 // import { authServerFn } from "@/actions/auth";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
+const DashboardRoute = () => {
+	return <Outlet />;
+};
+
 export const Route = createFileRoute("/(dashboard)")({
 	component: DashboardRoute,
 	beforeLoad: async () => {
@@ -17,7 +21,3 @@ export const Route = createFileRoute("/(dashboard)")({
 		// }
 	},
 });
-
-function DashboardRoute() {
-	return <Outlet />;
-}

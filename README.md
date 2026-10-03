@@ -83,9 +83,23 @@ Copy `.env.example` to `.env` (or `.envrc`) and fill in what you use. Nothing se
 
 ## Associating the stablecoin token
 
-On Hedera an account must **associate** with an HTS token before it can receive it.
+On Hedera an account must **associate** with an HTS token before it can receive it. Do this once for `MERCHANT_ACCOUNT_ID` and `STABLECOIN_TOKEN_ID` before the first swap pays out.
 
-1. [TODO — step-by-step: associate `STABLECOIN_TOKEN_ID` with `MERCHANT_ACCOUNT_ID` from the wallet or with the Hedera SDK before the first payment.]
+1. **From a wallet** — open the wallet for `MERCHANT_ACCOUNT_ID` (HashPack, Blade, Kabila…), search `STABLECOIN_TOKEN_ID` and choose **Associate**. Wallet UIs and the SaucerSwap app both expose this; a small association fee is charged in HBAR.
+2. **From code** — sign and send a `TokenAssociateTransaction` with the merchant account's key:
+
+   ```ts
+   import { Client, TokenAssociateTransaction } from "@hashgraph/sdk";
+
+   const tx = await new TokenAssociateTransaction()
+     .setAccountId("0.0.3003") // MERCHANT_ACCOUNT_ID
+     .setTokenIds(["0.0.2002"]) // STABLECOIN_TOKEN_ID
+     .freezeWith(client)
+     .sign(merchantKey);
+   await tx.execute(client);
+   ```
+
+3. **Verify** — `GET https://testnet.mirrornode.hedera.com/api/v1/accounts/<MERCHANT_ACCOUNT_ID>` and check the `tokens` list contains `STABLECOIN_TOKEN_ID`.
 
 ## Proof
 

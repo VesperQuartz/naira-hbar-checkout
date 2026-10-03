@@ -13,14 +13,7 @@ const formSchema = z.object({
 	phone: z.string(),
 });
 
-export const Route = createFileRoute("/(auth)/login")({
-	component: RouteComponent,
-	validateSearch: z.object({
-		redirect: z.string().optional(),
-	}),
-});
-
-function RouteComponent() {
+const RouteComponent = () => {
 	const maskField = useTanStackFormMask();
 	const form = useForm({
 		defaultValues: {
@@ -30,9 +23,6 @@ function RouteComponent() {
 		},
 		validators: {
 			onSubmit: formSchema,
-		},
-		onSubmit: (value) => {
-			console.log(JSON.stringify(value.value, null, 2));
 		},
 	});
 	return (
@@ -117,4 +107,11 @@ function RouteComponent() {
 			</div>
 		</form>
 	);
-}
+};
+
+export const Route = createFileRoute("/(auth)/login")({
+	component: RouteComponent,
+	validateSearch: z.object({
+		redirect: z.string().optional(),
+	}),
+});

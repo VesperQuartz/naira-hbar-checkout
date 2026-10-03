@@ -17,31 +17,7 @@ export interface RootContext {
 	queryClient: QueryClient;
 }
 
-export const Route = createRootRouteWithContext<RootContext>()({
-	head: () => ({
-		meta: [
-			{
-				charSet: "utf-8",
-			},
-			{
-				name: "viewport",
-				content: "width=device-width, initial-scale=1",
-			},
-			{
-				title: "TanStack Start Starter",
-			},
-		],
-		links: [
-			{
-				rel: "stylesheet",
-				href: appCss,
-			},
-		],
-	}),
-	shellComponent: RootDocument,
-});
-
-function RootDocument({ children }: { children: React.ReactNode }) {
+const RootDocument = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<html lang="en">
 			<head>
@@ -70,4 +46,28 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			</body>
 		</html>
 	);
-}
+};
+
+export const Route = createRootRouteWithContext<RootContext>()({
+	head: () => ({
+		meta: [
+			{
+				charSet: "utf-8",
+			},
+			{
+				name: "viewport",
+				content: "width=device-width, initial-scale=1",
+			},
+			{
+				title: "Naira HBAR Checkout",
+			},
+		],
+		links: [
+			{
+				rel: "stylesheet",
+				href: appCss,
+			},
+		],
+	}),
+	shellComponent: RootDocument,
+});

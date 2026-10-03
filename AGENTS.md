@@ -31,12 +31,15 @@ A Naira-priced checkout template: prices are shown in **₦**, the customer pays
 | Build | `pnpm build` |
 | Contract build | `cd packages/contract && forge build` |
 | Contract tests | `cd packages/contract && forge test` |
-| Contract deploy | `cd packages/contract && forge script script/Deploy.s.sol --rpc-url $HEDERA_RPC_URL --broadcast` |
+| Contract deploy | `cd packages/contract && forge script script/Deploy.s.sol --rpc-url https://testnet.hashio.io/api --private-key "$HEDERA_OPERATOR_PRIVATE_KEY" --broadcast` |
+| Receipt topic (once) | `pnpm --filter @repo/orpc hcs:topic` |
+| Live proof: order → pay → receipt | `pnpm --filter @repo/orpc proof` |
+| Order confirm smoke run | `pnpm --filter @repo/orpc smoke` |
 | Local database | `docker compose up -d`, then `pnpm --filter @repo/storage db:push` |
 
 ## Environment variables
 
-All names live in `.env.example`: `DEMO_NGN_PER_USD`, `CHAINLINK_HBAR_USD_FEED`, `HEDERA_NETWORK`, `HEDERA_OPERATOR_ID`, `HEDERA_OPERATOR_PRIVATE_KEY`, `HCS_TOPIC_ID`, `SAUCERSWAP_ROUTER`, `STABLECOIN_TOKEN_ID`, `MERCHANT_ACCOUNT_ID`, `DATABASE_URL`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`.
+All names live in `.env.example`: `DEMO_NGN_PER_USD`, `CHAINLINK_HBAR_USD_FEED`, `CHAINLINK_RPC_URL`, `CHECKOUT_CONTRACT_ADDRESS`, `HEDERA_NETWORK`, `HEDERA_OPERATOR_ID`, `HEDERA_OPERATOR_PRIVATE_KEY`, `HCS_TOPIC_ID`, `SAUCERSWAP_ROUTER`, `STABLECOIN_TOKEN_ID`, `MERCHANT_ACCOUNT_ID`, `MERCHANT_EVM_ADDRESS`, `PRICE_TOLERANCE_BPS`, `MAX_PRICE_AGE_SECONDS`, `DATABASE_URL`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `VITE_PUBLIC_API_URL`.
 
 Never commit `.env`. Keep real keys out of the code — read them from the validated config in `packages/shared`.
 
@@ -55,6 +58,7 @@ Never commit `.env`. Keep real keys out of the code — read them from the valid
 - The managed **Turborepo block** at the end of this file — turbo rewrites it before repository-scoped commands. Keep it committed.
 - Generated files (`routeTree.gen.ts`, `dist/`, `.output/`) — do not hand-edit them.
 - `agents/skills/` — reference material, not project source.
+- `packages/ui/` is a **vendored shadcn/ui kit** kept as upstream ships it — its `function` declarations are the one documented exception to the arrow-function rule; everything first-party is arrow-only.
 - Do not add committed secrets, a real `.env`, or private keys anywhere in the repo.
 
 <!-- BEGIN:turborepo-agent-rules -->
