@@ -9,10 +9,12 @@
 			"packageManager": ["none"]
 		},
 		"defaults": {
-			"installCommand": "pnpm install",
-			"packageManager": "pnpm",
+			"packageManager": "none",
 			"frontend": "none",
 			"solidityFramework": "foundry"
+		},
+		"outro": {
+			"installCommand": "pnpm install"
 		}
 	}
 }
