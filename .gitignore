@@ -41,6 +41,6 @@ SPEC.md
 .scratch/
 
 # Foundry
-packages/contract/out/
-packages/contract/cache/
-packages/contract/broadcast/
+packages/foundry/out/
+packages/foundry/cache/
+packages/foundry/broadcast/

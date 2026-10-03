@@ -343,7 +343,7 @@ importers:
         specifier: latest
         version: 1.4.2
 
-  packages/contract: {}
+  packages/foundry: {}
 
   packages/orpc:
     dependencies:

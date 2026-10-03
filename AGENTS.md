@@ -10,7 +10,7 @@ A Naira-priced checkout template: prices are shown in **₦**, the customer pays
 
 | Path | What lives there |
 | --- | --- |
-| `packages/contract/` | Foundry project: `CheckoutRouter.sol`, tests in `test/`, deploy script in `script/` |
+| `packages/foundry/` | Foundry project: `CheckoutRouter.sol`, tests in `test/`, deploy script in `script/` |
 | `packages/storage/` | Drizzle schema and Postgres access — optional at runtime |
 | `packages/auth/` | Better Auth configuration |
 | `packages/orpc/` | Typed API routers — server only |
@@ -29,9 +29,9 @@ A Naira-priced checkout template: prices are shown in **₦**, the customer pays
 | Typecheck | `pnpm typecheck` |
 | Test | `pnpm test` (node:test unit tests + `forge test`) |
 | Build | `pnpm build` |
-| Contract build | `cd packages/contract && forge build` |
-| Contract tests | `cd packages/contract && forge test` |
-| Contract deploy | `cd packages/contract && forge script script/Deploy.s.sol --rpc-url https://testnet.hashio.io/api --private-key "$HEDERA_OPERATOR_PRIVATE_KEY" --broadcast` |
+| Contract build | `cd packages/foundry && forge build` |
+| Contract tests | `cd packages/foundry && forge test` |
+| Contract deploy | `cd packages/foundry && forge script script/Deploy.s.sol --rpc-url https://testnet.hashio.io/api --private-key "$HEDERA_OPERATOR_PRIVATE_KEY" --broadcast` |
 | Receipt topic (once) | `pnpm --filter @repo/orpc hcs:topic` |
 | Live proof: order → pay → receipt | `pnpm --filter @repo/orpc proof` |
 | Order confirm smoke run | `pnpm --filter @repo/orpc smoke` |

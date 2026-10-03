@@ -109,7 +109,7 @@ Everything below runs against **Hedera testnet** with a funded account from the 
 
    ```bash
    set -a; . .env; set +a     # at the repo root, if the variables aren't exported yet
-   cd packages/contract
+   cd packages/foundry
    forge script script/Deploy.s.sol --rpc-url https://testnet.hashio.io/api \
      --private-key "$HEDERA_OPERATOR_PRIVATE_KEY" --broadcast
    ```
@@ -177,7 +177,7 @@ naira-hbar-checkout/
 pnpm lint
 pnpm typecheck
 pnpm build
-cd packages/contract && forge test
+cd packages/foundry && forge test
 ```
 
 ## Known limits and next steps
